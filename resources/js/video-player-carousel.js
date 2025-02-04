@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const swiper = new Swiper(".mySwiper", {
     grabCursor: true,
     centeredSlides: true,
-    slidesPerView: "auto", // Ensure three items are shown
+    slidesPerView: 2, // Ensure three items are shown
     spaceBetween: 20, // Adjust spacing between slides if needed
     autoplay: {
       delay: 5000, // Auto-slide every 3 seconds
