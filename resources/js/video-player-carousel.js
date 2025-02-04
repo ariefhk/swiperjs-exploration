@@ -32,6 +32,18 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "Ocean Waves at Sunset",
       content: "Waves gently crash against the shore as the sun sets in a blaze of color.",
     },
+    {
+      img: "https://swiperjs.com/demos/images/nature-4.jpg",
+      video: "https://www.w3schools.com/html/mov_bbb.mp4",
+      title: "Autumn Leaves in Motion",
+      content: "Vibrant fall foliage swirls in the wind, painting the ground with warm colors.",
+    },
+    {
+      img: "https://swiperjs.com/demos/images/nature-5.jpg",
+      video: "https://www.w3schools.com/html/mov_bbb.mp4",
+      title: "Ocean Waves at Sunset",
+      content: "Waves gently crash against the shore as the sun sets in a blaze of color.",
+    },
   ];
 
   // Select the wrapper where slides will be inserted
