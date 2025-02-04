@@ -1,0 +1,80 @@
+html,
+body {
+  height: 100vh;
+
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background-color: black;
+  height: max-content;
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.swiper {
+  background-color: red;
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.swiper-progress {
+  flex-shrink: 0;
+  flex-grow: 1;
+  width: auto;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.swiper-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #434343; /* Change color as needed */
+  transition: width 0.3s ease;
+}
+
+.btn-container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+  padding: 0px 20px;
+  background-color: aqua;
+}
+
+.custom-prev,
+.custom-next {
+  height: max-content;
+  color: white;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.title-wrapper {
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.swiper-slide {
+  width: auto; /* Allow the slide to adjust width based on its content */
+}
+
+.swiper-slide video {
+  height: 619px;
+  border-radius: 20px;
+  transition: transform 0.3s ease-in-out;
+  transform: scale(0.9); /* Make non-active slides smaller */
+}
+
+.swiper-slide.active-slide video {
+  transform: scale(1) !important; /* Center slide is bigger */
+}
