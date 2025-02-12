@@ -4,28 +4,308 @@
     <meta charset="utf-8" />
     <title>Swiper Video Player</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
-    <link rel="stylesheet" href="./resources/css/reset.css" />
+    <!-- <link rel="stylesheet" href="./resources/css/reset.css" /> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="./resources/css/video-player-carousel.css" />
+    <!-- <link rel="stylesheet" href="./resources/css/video-player-carousel.css" /> -->
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Oswald:wght@200..700&display=swap");
+
+      * {
+        margin: 0;
+      }
+
+      .section-video-carousel-container {
+        height: 100%;
+        /* width: 100vw; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        background-color: black;
+      }
+
+      .swiper-container {
+        height: max-content;
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .title-content {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .title-content h1 {
+        color: #fff;
+        text-align: center;
+        font-family: "Oswald", sans-serif;
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 46px; /* 143.75% */
+        text-transform: uppercase;
+      }
+
+      .title-content p {
+        color: #969696;
+        text-align: center;
+
+        /* Oswald/Paragraph/P16/16 Regular */
+        font-family: "Oswald", sans-serif;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 120%; /* 19.2px */
+      }
+
+      /* Default: Full width */
+      .swiper {
+        width: 100%;
+      }
+
+      /* If there's only one slide, set max-content width */
+      /* Ensure full width for a single video */
+      /* .swiper:has(.swiper-slide:nth-child(1):only-child) {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+   
+      .swiper-slide:nth-child(1):only-child video {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+      } */
+
+      /* If there's only one slide, set max-content width */
+      /* When Swiper has only one slide, apply full-width styling */
+      .swiper:has(.swiper-slide:nth-child(1):only-child) {
+        /* background-color: red; */
+        /* padding: 0; */
+        max-width: 1066px;
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Make the single slide fill the Swiper */
+      .swiper-slide:nth-child(1):only-child {
+        width: 100% !important;
+        height: 100% !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Make the video fill the entire container */
+      .swiper-slide:nth-child(1):only-child video {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover; /* Ensure full coverage */
+        transform: scale(1) !important;
+      }
+
+      .nav-container {
+        margin-top: 20px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+
+      .btn-container {
+        display: flex;
+        gap: 8px;
+      }
+
+      .custom-prev,
+      .custom-next {
+        height: max-content;
+        color: white;
+        cursor: pointer;
+        z-index: 0;
+      }
+
+      .custom-prev img,
+      .custom-next img {
+        width: 58px;
+        height: 58px;
+      }
+
+      .progress-container {
+        flex: 1; /* shorthand for */
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 0%;
+        display: flex;
+        align-items: center;
+        gap: 40px;
+      }
+
+      .swiper-progress {
+        flex-shrink: 0;
+        flex-grow: 1;
+        width: auto;
+
+        height: 5px;
+        background: rgba(255, 255, 255, 0.2);
+        overflow: hidden;
+      }
+
+      .swiper-progress-bar {
+        height: 100%;
+        width: 0%;
+        background: #fff; /* Change color as needed */
+        transition: width 0.3s ease;
+      }
+
+      #active-number {
+        color: #e4e4e4;
+        text-align: right;
+        font-family: "Oswald", sans-serif;
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .swiper-slide {
+        width: auto; /* Allow the slide to adjust width based on its content */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .swiper-slide video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures the video fills the container */
+        transition: transform 0.3s ease-in-out;
+        transform: scale(0.9); /* Keeps non-active slides slightly smaller */
+      }
+
+      .swiper-slide.active-slide video {
+        transform: scale(1) !important; /* Center slide is bigger */
+      }
+
+      @media screen and (max-width: 1279px) {
+        .swiper:has(.swiper-slide:nth-child(1):only-child) {
+          max-width: 740px;
+        }
+
+        .section-video-carousel-container {
+          height: 100%;
+        }
+
+        .title-content h1 {
+          font-size: 24px;
+
+          line-height: 40px; /* 143.75% */
+        }
+
+        .title-content p {
+          font-size: 12px;
+        }
+
+        #active-number {
+          font-size: 24px;
+        }
+
+        .progress-container {
+          gap: 20px;
+        }
+        .custom-prev img,
+        .custom-next img {
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      @media screen and (max-width: 767px) {
+        #active-number {
+          font-size: 16px;
+        }
+
+        .title-content h1 {
+          font-size: 16px;
+
+          line-height: 24px; /* 143.75% */
+        }
+
+        .title-content p {
+          font-size: 12px;
+        }
+
+        .swiper:has(.swiper-slide:nth-child(1):only-child) {
+          max-width: 350px;
+        }
+
+        .progress-container {
+          gap: 16px;
+        }
+        .custom-prev img,
+        .custom-next img {
+          width: 32px;
+          height: 32px;
+        }
+      }
+
+      @media screen and (max-width: 364px) {
+        #active-number {
+          font-size: 16px;
+        }
+
+        .progress-container {
+          gap: 12px;
+        }
+
+        .nav-container {
+          gap: 12px;
+        }
+
+        .custom-prev img,
+        .custom-next img {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Swiper -->
-    <div class="container">
-      <div id="title-content"></div>
-      <div class="swiper mySwiper">
-        <div class="swiper-wrapper" id="swiper-wrapper"></div>
-      </div>
-      <div class="btn-container">
-        <div class="custom-prev">
-          <img src="/resources/images/arrow-1-prev.png" />
+    <div class="section-video-carousel-container">
+      <div class="swiper-container">
+        <div id="video-carousel-title-wrapper"></div>
+        <div id="video-swiper" class="swiper">
+          <div class="swiper-wrapper" id="swiper-wrapper"></div>
         </div>
-        <div class="custom-next">
-          <img src="/resources/images/arrow-1-next.png" />
+        <div class="nav-container">
+          <div class="btn-container">
+            <div class="custom-prev">
+              <img src="/resources/images/arrow-1-prev.png" />
+            </div>
+            <div class="custom-next">
+              <img src="/resources/images/arrow-1-next.png" />
+            </div>
+          </div>
+          <div class="progress-container">
+            <div class="swiper-progress">
+              <div class="swiper-progress-bar"></div>
+            </div>
+            <h1 id="active-number"></h1>
+          </div>
         </div>
-        <div class="swiper-progress">
-          <div class="swiper-progress-bar"></div>
-        </div>
-        <h1 id="active-number"></h1>
       </div>
     </div>
 
@@ -33,6 +313,152 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <!-- Initialize Swiper -->
-    <script src="./resources/js/video-player-carousel.js" type="module"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("Dokumen HTML sudah dimuat dan DOM sudah siap!");
+
+        const slidesData = [
+          {
+            img: "https://swiperjs.com/demos/images/nature-1.jpg",
+            video: "https://www.w3schools.com/html/mov_bbb.mp4",
+            title: "$CENT: Empowering Collaborative Entertainment, Where Your <br/> Voice Shapes the Future!",
+            content:
+              "We’re excited to launch $CENT, our revolutionary ERC20 token transforming collaborative entertainment. With $CENT, you can shape entertainment <br/> projects and have your creativity rewarded. Join us to be part of the next big wave in digital entertainment!",
+          },
+          // {
+          //   img: "https://swiperjs.com/demos/images/nature-1.jpg",
+          //   video: "https://www.w3schools.com/html/mov_bbb.mp4",
+          //   title: "$CENT: Empowering Collaborative Entertainment, Where Your <br/> Voice Shapes the Future!",
+          //   content:
+          //     "We’re excited to launch $CENT, our revolutionary ERC20 token transforming collaborative entertainment. With $CENT, you can shape entertainment <br/> projects and have your creativity rewarded. Join us to be part of the next big wave in digital entertainment!",
+          // },
+        ];
+
+        // Select the wrapper where slides will be inserted
+        const swiperWrapper = document.getElementById("swiper-wrapper");
+
+        slidesData.forEach((slide, index) => {
+          const slideElement = document.createElement("div");
+          slideElement.classList.add("swiper-slide");
+
+          const videoElement = document.createElement("video");
+          videoElement.src = slide.video;
+          videoElement.preload = "metadata";
+          videoElement.autoplay = true; // Enable autoplay
+          videoElement.loop = true; // Enable looping
+          videoElement.muted = true; // Mute the video
+          videoElement.controls = false; // Remove video controls (play/pause, volume, etc.)
+
+          slideElement.appendChild(videoElement);
+          swiperWrapper.appendChild(slideElement);
+        });
+
+        function getCenterSlide(swiper) {
+          // Get the center slide element
+          let centerSlide = swiper.slides[swiper.activeIndex];
+
+          // Extract image src or any other content
+          let imageSrc = centerSlide.querySelector("img")?.src;
+
+          // Update the title and content
+          generateTitleContent(slidesData[swiper.activeIndex].title, slidesData[swiper.activeIndex].content);
+          updateActiveNumber(swiper.activeIndex + 1);
+        }
+
+        const swiper = new Swiper("#video-swiper", {
+          grabCursor: true,
+          centeredSlides: slidesData.length > 1,
+          slidesPerView: slidesData.length > 1 ? 2 : 1, // Ensure three items are shown
+          spaceBetween: 0, // Adjust spacing between slides if needed
+          autoplay:
+            slidesData.length > 1
+              ? {
+                  delay: 5000, // Auto-slide every 3 seconds
+                  disableOnInteraction: false, // Keep autoplay after user interaction
+                }
+              : false,
+          pagination: false,
+          navigation: {
+            nextEl: ".custom-next", // Hide navigation if only 1 slide
+            prevEl: ".custom-prev",
+          },
+          on: {
+            init: function (swiper) {
+              updateNavWidth(swiper);
+            },
+
+            slideChange: function (swiper) {
+              updateNavWidth(swiper);
+              if (slidesData.length > 1) {
+                updateProgressBar(this);
+                getCenterSlide(this);
+              }
+            },
+            slideChangeTransitionEnd: function () {
+              document.querySelectorAll(".swiper-slide").forEach((slide) => {
+                slide.classList.remove("active-slide");
+              });
+
+              // Add active-slide class to the current active slide
+              document.querySelector(".swiper-slide-active").classList.add("active-slide");
+            },
+          },
+        });
+
+        // If only 1 slide, force centering
+        if (slidesData.length === 1) {
+          const btnContainer = document.querySelector(".btn-container");
+          // const swiperContainer = document.querySelector(".nav-container");
+          // swiperContainer.style.width = "1008px";
+          btnContainer.style.display = "none";
+          generateTitleContent(slidesData[0].title, slidesData[0].content);
+          updateActiveNumber(1);
+        }
+
+        function updateProgressBar(swiper) {
+          const progressBar = document.querySelector(".swiper-progress-bar");
+          if (!progressBar) return;
+
+          const totalSlides = swiper.slides.length;
+          if (totalSlides <= 1) return;
+
+          const clampedIndex = Math.min(Math.max(swiper.realIndex, 0), totalSlides - 1);
+          const progress = (clampedIndex / (totalSlides - 1)) * 100;
+
+          progressBar.style.width = `${progress}%`;
+          console.log("Progress:", progress);
+        }
+
+        // Initialize the progress bar on load
+        updateProgressBar(swiper);
+
+        function generateTitleContent(title, content) {
+          const titleContent = document.getElementById("video-carousel-title-wrapper");
+          titleContent.innerHTML = `
+            <div class="title-content">
+              <h1>${title}</h2>
+              <p>${content}</p>
+            </div>
+        `;
+        }
+
+        function updateActiveNumber(number) {
+          const activeNumber = document.getElementById("active-number");
+          activeNumber.textContent = `0${number}`;
+        }
+
+        function updateNavWidth(swiper) {
+          const activeSlide = swiper.slides[swiper.activeIndex];
+          const navContainer = document.querySelector(".nav-container");
+
+          if (activeSlide && navContainer) {
+            const activeSlideWidth = activeSlide.offsetWidth;
+            navContainer.style.width = `${activeSlideWidth}px`;
+
+            console.log("Nav width:", activeSlideWidth);
+          }
+        }
+      });
+    </script>
   </body>
 </html>
